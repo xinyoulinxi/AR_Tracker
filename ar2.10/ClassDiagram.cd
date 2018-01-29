@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ASiftDetector" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ASiftDetector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::cameraCalibration" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAAAAgAAIAAAAgAhiAABAAgCAAEIACAQAAAAAAwAA=</HashCode>
+      <FileName>cameraCalibration.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::orException" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAACAIAAAAACA=</HashCode>
+      <FileName>orException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::orCvException" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAACACAAAAAAAAAAAAAAAAAAAAAAAAAQAAhAAA=</HashCode>
+      <FileName>orException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::orArgException" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAEAAAAgAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>orException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::orStateException" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>orException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::or::controlOR" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFCQAAQAAAMAAACAiCAQECAAMEMkKIBAQNCDAAAEAA=</HashCode>
+      <FileName>controlOR.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::or::imageDB" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAABAAAIAKXAAABOEiGAAaAAAsABACoAAUQQAAABQgA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::or::visualWords" Collapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAgGAgCICABAAAgCAEQIAAAAAISApgAQAAAAKAAAI=</HashCode>
+      <FileName>visualWords.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::tracking::kltTrackingOBJ" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABBABAAAAAgQAAABiAAAAAAAAAIQAACQAAAAAA=</HashCode>
+      <FileName>kltTrackingOBJ.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cvar::tracking::trackingOBJ" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAgAAAAACAAAAAAAAAAAABAAAAACAA=</HashCode>
+      <FileName>trackingOBJ.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="cvar::or::__unnamed_struct_016b_1" Collapsed="true">
+    <Position X="1.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="cvar::or::__unnamed_struct_016b_2" Collapsed="true">
+    <Position X="8.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="cvar::or::__unnamed_struct_016b_3" Collapsed="true">
+    <Position X="8.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAECAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="cvar::or::__unnamed_struct_016b_4" Collapsed="true">
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAEAgAAAAAAAAAEABACAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="cvar::or::featureVote" Collapsed="true">
+    <Position X="1.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="cvar::or::featureInfo" Collapsed="true">
+    <Position X="8.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="cvar::or::imageInfo" Collapsed="true">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="cvar::or::resultInfo" Collapsed="true">
+    <Position X="4.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>imageDB.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
