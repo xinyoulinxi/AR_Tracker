@@ -20,10 +20,12 @@ void AR_Controller::StartAR()
 {
 	VideoCapture Cam(0);
 	Mat sceneImg;
-	while (1) {
+	viewModel->Init();
+	while (!glfwWindowShouldClose(viewModel->m_window)) {
 		Cam >> sceneImg;
-		viewModel->DrawScene(sceneImg);
+		tracker.Tracking(sceneImg);
 		viewModel->DrawObject();
+		viewModel->DrawScene(sceneImg);
 	}
 
 }

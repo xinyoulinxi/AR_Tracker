@@ -11,6 +11,8 @@
 
 //单例设计的模型加载类
 
+
+
 class ViewModel
 {
 private:
@@ -20,10 +22,11 @@ private:
 	ViewModel(ViewModel*) {}
 	~ViewModel();
 
-	void Init();
+	
 	void InitTextures();
 	void InitVertexs();
 public:
+	void Init();
 	static ViewModel* GetInstance() {
 		if (!Instance) {
 			Instance = new ViewModel();
@@ -37,9 +40,10 @@ public:
 		}
 		Instance = nullptr;
 	}
+	GLFWwindow* m_window;
 private://成员变量
 //模型相关
-	GLFWwindow* m_window;
+	
 	Shader m_sceneShader; //场景着色器
 	Shader m_objShader;   //模型着色器
 //图像属性
@@ -59,8 +63,20 @@ private://成员变量
 	//视频图像大小
 	int capture_width;
 	int capture_height;
+	static float
+		x_cube,
+		y_cube,
+		z_cube;
 
 
+
+	float width = 0.2f;
+
+	unsigned int textureScene, textureCube1, textureCube2;
+
+
+
+	Camera* camera;
 public:
 	//加载模型
 	void DrawObject();
@@ -69,7 +85,11 @@ public:
 	void DrawScene(cv::Mat& frame);
 
 
-	
+
+
+public:
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	static 	void processInput(GLFWwindow *window);
 	
 };
 

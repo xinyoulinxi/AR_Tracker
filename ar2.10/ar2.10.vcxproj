@@ -163,6 +163,7 @@
     <ClInclude Include="AR_Controller.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ImageVoteBase.h" />
+    <ClInclude Include="NormalFunctions.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TrackingObj.h" />

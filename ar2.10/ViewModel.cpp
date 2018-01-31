@@ -1,10 +1,13 @@
 #include "ViewModel.h"
 using namespace std;
 using namespace cv;
+#include"NormalFunctions.h"
+ViewModel* ViewModel::Instance = nullptr;
 float
-x_cube = 0.0f,
-y_cube = 0.0f,
-z_cube = 0.0f;
+ViewModel::x_cube = 0.0,
+ViewModel::y_cube=0.0,
+ViewModel::z_cube=0.0;
+//带有纹理和颜色的矩形顶点数据(场景）
 float sceneVertices[] = {
 	// positions          // texture coords
 	1.0f,  1.0f, -0.0f,    1.0f, 0.0f,// top right
@@ -12,13 +15,7 @@ float sceneVertices[] = {
 	-1.0f, -1.0f, -0.0f,    0.0f, 1.0f ,// bottom left
 	-1.0f,  1.0f, -0.0f,   0.0f, 0.0f, // top left 
 };
-unsigned int indices[] = {
-	0, 1, 3, // first triangle
-	1, 2, 3  // second triangle
-};
-float width = 0.2f;
-
-unsigned int textureScene, textureCube1, textureCube2;
+float width = 0.5f;
 float boxVertices[] = {
 	-width, -width, -width,  0.0f, 0.0f,
 	width, -width, -width,  1.0f, 0.0f,
@@ -62,19 +59,18 @@ float boxVertices[] = {
 	-width,  width,  width,  0.0f, 0.0f,
 	-width,  width, -width,  0.0f, 1.0f
 };
-
-
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
-
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+//顶点连接顺序
+unsigned int indices[] = {
+	0, 1, 3, // first triangle
+	1, 2, 3  // second triangle
+};
+void ViewModel::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	//窗口大小改变，重新更改渲染模式
 	glViewport(0, 0, width, height);
 
 }
-void processInput(GLFWwindow *window)
+void ViewModel::processInput(GLFWwindow *window)
 {
 	//按键检测
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -91,20 +87,18 @@ void processInput(GLFWwindow *window)
 	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		x_cube += 0.05;
 	}
-	cout << x_cube << " " << y_cube << endl;
+	//cout << x_cube << " " << y_cube << endl;
 }
 
-const int widthWindow=1200;
-const int heightWindow=800;
+const int widthWindow = 512;
+const int heightWindow = 512;
 ViewModel::ViewModel()
 {
 	Window window("AR Window", widthWindow, heightWindow);
 	m_window = window.GetWindow();
-	m_sceneShader.Init("vertexShaderSorce.txt", "fragmentShaderSource.txt");
-	m_objShader.Init("boxVertexShader.txt", "boxFragmentShader.txt");
-	
-	Init();
-	
+
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 }
 
 
@@ -127,18 +121,18 @@ void ViewModel::Init()
 		return;
 	}
 	glEnable(GL_DEPTH_TEST);//开启深度测试
+	m_sceneShader.Init("vertexShaderSorce.txt", "fragmentShaderSource.txt");
+	m_objShader.Init("boxVertexShader.txt", "boxFragmentShader.txt");
 
 	InitVertexs();
 	InitTextures();
-
-
 }
 
 void ViewModel::InitTextures()
 {
-	//纹理加载
+//纹理加载
 	//盒子纹理
-
+	
 	glGenTextures(1, &textureCube1);
 	glBindTexture(GL_TEXTURE_2D, textureCube1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -148,7 +142,6 @@ void ViewModel::InitTextures()
 	Mat cubeImg = imread("image/container.jpg");
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, cubeImg.cols, cubeImg.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, cubeImg.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
-
 
 	glGenTextures(1, &textureCube2);
 	glBindTexture(GL_TEXTURE_2D, textureCube2);
@@ -167,6 +160,8 @@ void ViewModel::InitTextures()
 
 void ViewModel::InitVertexs()
 {
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 
 	glGenVertexArrays(1, &scene_VAO);
 	glGenBuffers(1, &scene_VBO);
@@ -186,7 +181,7 @@ void ViewModel::InitVertexs()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	//盒子
-	unsigned int cubeVAO, cubeVBO;
+	
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
 	glBindVertexArray(cubeVAO);
@@ -201,6 +196,13 @@ void ViewModel::InitVertexs()
 
 void ViewModel::DrawObject()
 {
+	// 检测输入
+	processInput(m_window);
+
+	// 渲染指令		
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //调用glClearColor来设置glClear清空屏幕之后的颜色
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);       //清空屏幕
+//cube着色器阶段
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureCube1);
 	glActiveTexture(GL_TEXTURE1);
@@ -211,20 +213,19 @@ void ViewModel::DrawObject()
 	glm::mat4 view;
 	glm::mat4 projection;
 	//位置和状态变换
+
 	model = glm::scale(model, glm::vec3(0.5, 0.5, 0.5));
-	model = glm::translate(model, glm::vec3(x_cube, y_cube, z_cube));
+	//model = glm::translate(model, glm::vec3(x_cube, y_cube, z_cube));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 1.0f, 0.0f));
 
 
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
 	projection = glm::perspective(glm::radians(45.0f), (float)widthWindow / (float)heightWindow, 0.1f, 100.0f);
-	// retrieve the matrix uniform locations
+
 	unsigned int modelLoc = glGetUniformLocation(m_objShader.ID, "model");
 	unsigned int viewLoc = glGetUniformLocation(m_objShader.ID, "view");
-	// pass them to the shaders (3 different ways)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-	// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 	m_objShader.setMat4("projection", projection);
 
 	// render box
@@ -233,18 +234,14 @@ void ViewModel::DrawObject()
 	glBindVertexArray(0);
 
 	glDepthFunc(GL_LEQUAL);
-
-	glfwSwapBuffers(m_window);
-
-	//glfwPollEvents函数检查有没有触发什么事件（比如键盘输入、鼠标移动等）、
-	//更新窗口状态，并调用对应的回调函数（可以通过回调方法手动设置）。
-	glfwPollEvents();
 }
 
 void ViewModel::DrawScene(cv::Mat & frame)
 {
+
 	unsigned int modelLoc;
 	unsigned int viewLoc;
+
 	glGenTextures(1, &textureScene);
 	glBindTexture(GL_TEXTURE_2D, textureScene);
 	// set the texture wrapping parameters
@@ -261,9 +258,9 @@ void ViewModel::DrawScene(cv::Mat & frame)
 	m_sceneShader.use();
 	glm::mat4 Scenemodel;
 	glm::mat4 Sceneview;
-	glm::mat4 Sceneprojection;
 	glm::mat4 projection;
-	//Scenemodel = glm::rotate(Scenemodel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	//Scenemodel = glm::rotate(Scenemodel, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	projection = glm::perspective(glm::radians(45.0f), (float)widthWindow / (float)heightWindow, 0.1f, 100.0f);
 	Sceneview = glm::translate(Sceneview, glm::vec3(0.0f, 0.0f, -2.0f));
 	// retrieve the matrix uniform locations
 	modelLoc = glGetUniformLocation(m_sceneShader.ID, "model");
@@ -278,5 +275,10 @@ void ViewModel::DrawScene(cv::Mat & frame)
 	glBindTexture(GL_TEXTURE_2D, textureScene);
 	glBindVertexArray(scene_VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glfwSwapBuffers(m_window);
+
+	//glfwPollEvents函数检查有没有触发什么事件（比如键盘输入、鼠标移动等）、
+	//更新窗口状态，并调用对应的回调函数（可以通过回调方法手动设置）。
+	glfwPollEvents();
 
 }
